@@ -338,7 +338,8 @@ namespace casadi {
       AUX_REAL_MIN,
       AUX_ISINF,
       AUX_BOUNDS_CONSISTENCY,
-      AUX_LSQR
+      AUX_LSQR,
+      AUX_WEAVE
     };
 
     /** \brief Add a built-in auxiliary function */
