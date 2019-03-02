@@ -229,6 +229,8 @@ else()
   set(WITH_BLOCKSQP_DEF OFF)
   set(WITH_IPOPT_DEF OFF)
 endif()
+message(STATUS "IPOPT_FOUND: ${IPOPT_FOUND}")
+message(STATUS "WITH_IPOPT_DEF: ${WITH_IPOPT_DEF}")
 
 ############################################################
 ################# Misc options #############################
@@ -613,9 +615,17 @@ endif()
 add_feature_info(blocksqp-interface WITH_BLOCKSQP "Interface to the NLP solver blockSQP.")
 
 # IPOPT: A sparse interior point NLP solver with filter line-search
+set(WITH_IPOPT_DEF ON)
 option(WITH_IPOPT "Compile the interface to IPOPT" ${WITH_IPOPT_DEF})
+message(STATUS "IPOPT_FOUND: ${IPOPT_FOUND}")
+message(STATUS "WITH_IPOPT_DEF: ${WITH_IPOPT_DEF}")
+message(STATUS "WITH_IPOPT: ${IPOPT_FOUND}")
+
 if(WITH_IPOPT)
   find_package(IPOPT REQUIRED)
+  # set(IPOPT_EXECUTABLE ${CMAKE_SOURCE_DIR}/../ipopt/build/bin/ipopt)
+  # set(IPOPT_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/../ipopt/build/include)
+  # set(IPOPT_LIBRARIES ${CMAKE_SOURCE_DIR}/../ipopt/build/lib/libipopt.so)
 endif()
 add_feature_info(ipopt-interface WITH_IPOPT "Interface to the NLP solver Ipopt.")
 
@@ -649,12 +659,17 @@ endif()
 add_feature_info(clp-interface WITH_CLP "Interface to the LP solver CLP.")
 
 # SNOPT: An SQP method
-option(WITH_SNOPT "Compile the SNOPT interface if SNOPT libraries can be found" OFF)
+option(WITH_SNOPT "Compile the SNOPT interface if SNOPT libraries can be found" ON)
 option(WITH_SNOPT_FORCE_DUMMY "Compile the SNOPT interface against a dummy library (for Debian distribution; breaks normal SNOPT build)" OFF)
 option(WITH_BUILD_SNOPT_INTERFACE "Use the SNOPT C-interface shipped with casadi" ON)
 if(WITH_SNOPT)
   if(NOT WITH_SNOPT_FORCE_DUMMY)
-    find_package(SNOPT REQUIRED)
+    # find_package(SNOPT REQUIRED)
+    # find_package(SNOPT
+    #         HINTS ${CMAKE_SOURCE_DIR}/../snopt
+    #         REQUIRED)
+    set(SNOPT_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/../snopt/include)
+    set(SNOPT_LIBRARIES ${CMAKE_SOURCE_DIR}/../snopt/cmake-build-debug/libfoexsnopt.a)
   endif()
   if(WITH_BUILD_SNOPT_INTERFACE)
     set(SNOPT_INTERFACE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/external_packages/snopt-interface/include)
