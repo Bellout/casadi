@@ -30,3 +30,5 @@ experimental/joel/cuter/cuter_source
 experimental/joel/cuter/orfe.princeton.edu
 experimental/joel/cuter/cuter_selected
 external_packages/ColPack
+/.idea/
+/cmake-build-debug/
